@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paper Rock Scissor</title>
+</head>
+<body>
+    <script>
+        const computerPlay = () => {
+            const choice = ['rock', 'paper', 'scissor']
+            return choice[Math.floor(Math.random()*choice.length)]
+        }
+
+        const playerPlay = () => {
+            const choice = prompt("Pick: Rock, Paper, or Scissor")
+            return choice.toLowerCase()
+        }
+        
+        function playRound(playerSelection, computerSelection) {
+            if (computerSelection === 'rock') {
+                if (playerSelection === 'paper') {
+                    return "You Win! Paper beats Rock"
+                }
+                else if (playerSelection === 'scissor') {
+                    return "You Lose! Rock beats Scissor"
+                }
+                else {
+                    return "Tie Game"
+                }
+            }
+            else if (computerSelection === 'paper') {
+                if (playerSelection === 'scissor') {
+                    return "You Win! Scissor beats Paper"
+                }
+                else if (playerSelection === 'rock') {
+                    return "You Lose! Paper beats Rock"
+                }
+                else {
+                    return "Tie Game"
+                }
+            }
+            else {
+                if (playerSelection === 'rock') {
+                    return "You Win! Rock beats Scissor"
+                }
+                else if (playerSelection === 'paper') {
+                    return "You Lose! Scissor beats Paper"
+                }
+                else {
+                    return "Tie Game"
+                }
+            }
+        }
+
+        function game() {
+            let winCount = 0;
+            let loseCount = 0;
+            let tieCount = 0;
+            for (i = 0; i < 5; i++) {
+                let player = playerPlay()
+                let computer = computerPlay()
+                let result = playRound(player, computer)
+                if (result.slice(4, 5) === "W") {
+                    winCount++
+                }
+                else if (result.slice(4, 5) === "L") {
+                    loseCount++
+                }
+                else {
+                    tieCount++
+                }
+                console.log("Player: " + winCount)
+                console.log("Computer: " + loseCount)
+                console.log("Tie Game: " + tieCount)
+            }
+            if (winCount > loseCount) {
+                console.log("Player Wins!")
+            }
+            else if (winCount < loseCount) {
+                console.log("Computer Wins!")
+            }
+            else {
+                console.log("It is a tie!")
+            }
+        }
+
+        game()
+    </script>
+</body>
+</html>
