@@ -1,92 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paper Rock Scissor</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+    <div class="result">
+        <h1>Click a button to play! First to reach 5 wins!</h1>
+    </div>
+    <div class="btn">
+        <button id="rock">Rock</button>
+        <button id="paper">Paper</button>
+        <button id="scissor">Scissor</button>
+    </div>
+    <div class="score">
+        <div class="player">Player: 0</div>
+        <div class="computer">Computer: 0</div>
+        <div class="tie">Tie: 0</div>
+    </div>
+    <div class="winner">
+        <h2></h2>
+    </div>
+
     <script>
+        let winCount = 0;
+        let loseCount = 0;
+        let tieCount = 0;
+
         const computerPlay = () => {
             const choice = ['rock', 'paper', 'scissor']
-            return choice[Math.floor(Math.random()*choice.length)]
+            return choice[Math.floor(Math.random() * choice.length)]
         }
 
-        const playerPlay = () => {
-            const choice = prompt("Pick: Rock, Paper, or Scissor")
-            return choice.toLowerCase()
+        const resetGame = () => {
+            winCount = 0
+            loseCount = 0
+            tieCount = 0
+            const player = document.querySelector(".player")
+            player.textContent = `Player: ${winCount}`
+            const computer = document.querySelector(".computer")
+            computer.textContent = `Computer: ${loseCount}`
+            const tie = document.querySelector(".tie")
+            tie.textContent = `Tie: ${tieCount}`
+            const hideBtn = document.querySelector(".btn")
+            const buttonToHide = document.querySelector("#reset")
+            const hideState = document.querySelector("h2")
+            hideState.textContent = ""
+            hideBtn.removeChild(buttonToHide)
+
         }
-        
+
         function playRound(playerSelection, computerSelection) {
             if (computerSelection === 'rock') {
                 if (playerSelection === 'paper') {
-                    return "You Win! Paper beats Rock"
+                    const h1 = document.querySelector('h1')
+                    h1.textContent = "You Win! Paper beats Rock"
+                    winCount++
+                    const player = document.querySelector(".player")
+                    player.textContent = `Player: ${winCount}`
                 }
                 else if (playerSelection === 'scissor') {
-                    return "You Lose! Rock beats Scissor"
+                    const h1 = document.querySelector('h1')
+                    h1.textContent = "You Lose! Rock beats Scissor"
+                    loseCount++
+                    const computer = document.querySelector(".computer")
+                    computer.textContent = `Computer: ${loseCount}`
                 }
                 else {
-                    return "Tie Game"
+                    const h1 = document.querySelector('h1')
+                    h1.textContent = "Tie Game"
+                    tieCount++
+                    const tie = document.querySelector(".tie")
+                    tie.textContent = `Tie: ${tieCount}`
                 }
             }
             else if (computerSelection === 'paper') {
                 if (playerSelection === 'scissor') {
-                    return "You Win! Scissor beats Paper"
+                    const h1 = document.querySelector('h1')
+                    h1.textContent = "You Win! Scissor beats Paper"
+                    winCount++
+                    const player = document.querySelector(".player")
+                    player.textContent = `Player: ${winCount}`
                 }
                 else if (playerSelection === 'rock') {
-                    return "You Lose! Paper beats Rock"
+                    const h1 = document.querySelector('h1')
+                    h1.textContent = "You Lose! Paper beats Rock"
+                    loseCount++
+                    const computer = document.querySelector(".computer")
+                    computer.textContent = `Computer: ${loseCount}`
                 }
                 else {
-                    return "Tie Game"
+                    const h1 = document.querySelector('h1')
+                    h1.textContent = "Tie Game"
+                    tieCount++
                 }
             }
             else {
                 if (playerSelection === 'rock') {
-                    return "You Win! Rock beats Scissor"
+                    const h1 = document.querySelector('h1')
+                    h1.textContent = "You Win! Rock beats Scissor"
+                    winCount++
+                    const player = document.querySelector(".player")
+                    player.textContent = `Player: ${winCount}`
                 }
                 else if (playerSelection === 'paper') {
-                    return "You Lose! Scissor beats Paper"
-                }
-                else {
-                    return "Tie Game"
-                }
-            }
-        }
-
-        function game() {
-            let winCount = 0;
-            let loseCount = 0;
-            let tieCount = 0;
-            for (i = 0; i < 5; i++) {
-                let player = playerPlay()
-                let computer = computerPlay()
-                let result = playRound(player, computer)
-                if (result.slice(4, 5) === "W") {
-                    winCount++
-                }
-                else if (result.slice(4, 5) === "L") {
+                    const h1 = document.querySelector('h1')
+                    h1.textContent = "You Lose! Scissor beats Paper"
                     loseCount++
+                    const computer = document.querySelector(".computer")
+                    computer.textContent = `Computer: ${loseCount}`
                 }
                 else {
+                    const h1 = document.querySelector('h1')
+                    h1.textContent = "Tie Game"
                     tieCount++
                 }
-                console.log("Player: " + winCount)
-                console.log("Computer: " + loseCount)
-                console.log("Tie Game: " + tieCount)
             }
-            if (winCount > loseCount) {
-                console.log("Player Wins!")
+
+            if (winCount === 5) {
+                const h2 = document.querySelector('h2')
+                h2.textContent = "You Win!"
+                const removeBtn = document.querySelector('.btn')
+                const resetBtn = document.createElement('button')
+                resetBtn.setAttribute('id', 'reset')
+                resetBtn.textContent = "Reset Game"
+                removeBtn.appendChild(resetBtn)
+                const resetbtn = document.querySelector('#reset');
+                resetbtn.addEventListener('click', () => resetGame());
             }
-            else if (winCount < loseCount) {
-                console.log("Computer Wins!")
-            }
-            else {
-                console.log("It is a tie!")
+
+            if (loseCount === 5) {
+                const h2 = document.querySelector('h2')
+                h2.textContent = "You Lose!"
+                const removeBtn = document.querySelector('.btn')
+                const resetBtn = document.createElement('button')
+                resetBtn.setAttribute('id', 'reset')
+                resetBtn.textContent = "Reset Game"
+                removeBtn.appendChild(resetBtn)
+                const resetbtn = document.querySelector('#reset');
+                resetbtn.addEventListener('click', () => resetGame());
             }
         }
 
-        game()
+        const rockbtn = document.querySelector('#rock');
+        rockbtn.addEventListener('click', () => playRound('rock', computerPlay()));
+
+        const paperbtn = document.querySelector('#paper');
+        paperbtn.addEventListener('click', () => playRound('paper', computerPlay()));
+
+        const scissorbtn = document.querySelector('#scissor');
+        scissorbtn.addEventListener('click', () => playRound('scissor', computerPlay()));
     </script>
 </body>
+
 </html>
